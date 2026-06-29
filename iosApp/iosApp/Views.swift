@@ -1,15 +1,5 @@
 import UIKit
 
-/// Renders an emoji string into a UIImage (used for tab bar icons).
-func emojiImage(_ emoji: String, size: CGFloat = 22) -> UIImage {
-    let attributes: [NSAttributedString.Key: Any] = [.font: UIFont.systemFont(ofSize: size)]
-    let textSize = (emoji as NSString).size(withAttributes: attributes)
-    let renderer = UIGraphicsImageRenderer(size: textSize)
-    return renderer.image { _ in
-        (emoji as NSString).draw(at: .zero, withAttributes: attributes)
-    }.withRenderingMode(.alwaysOriginal)
-}
-
 // MARK: - Loading / Error
 
 final class LoadingView: UIView {

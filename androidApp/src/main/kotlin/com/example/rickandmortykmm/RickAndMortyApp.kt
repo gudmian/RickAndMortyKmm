@@ -1,6 +1,8 @@
 package com.example.rickandmortykmm
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -8,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -26,15 +29,19 @@ import com.example.rickandmortykmm.feature.location.ui.locationDetailGraph
 import com.example.rickandmortykmm.feature.locationfeed.ui.LocationFeedRoutes
 import com.example.rickandmortykmm.feature.locationfeed.ui.locationFeedGraph
 
-private data class Tab(val route: String, val label: String, val icon: String)
+private data class Tab(
+    val route: String,
+    val label: String,
+    @DrawableRes val iconRes: Int,
+)
 
 @Composable
 fun RickAndMortyApp() {
     val navController = rememberNavController()
     val tabs = listOf(
-        Tab(CharacterFeedRoutes.FEED, "Characters", "👥"),
-        Tab(LocationFeedRoutes.FEED, "Locations", "📍"),
-        Tab(EpisodeFeedRoutes.FEED, "Episodes", "🎬"),
+        Tab(CharacterFeedRoutes.FEED, "Characters", R.drawable.ic_tab_characters),
+        Tab(LocationFeedRoutes.FEED, "Locations", R.drawable.ic_tab_locations),
+        Tab(EpisodeFeedRoutes.FEED, "Episodes", R.drawable.ic_tab_episodes),
     )
 
     Scaffold(bottomBar = { AppBottomBar(navController, tabs) }) { padding ->
@@ -69,7 +76,12 @@ private fun AppBottomBar(navController: NavController, tabs: List<Tab>) {
                         restoreState = true
                     }
                 },
-                icon = { Text(tab.icon) },
+                icon = {
+                    Icon(
+                        painter = painterResource(tab.iconRes),
+                        contentDescription = tab.label,
+                    )
+                },
                 label = { Text(tab.label) },
             )
         }
